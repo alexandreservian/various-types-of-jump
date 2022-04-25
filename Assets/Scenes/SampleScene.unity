@@ -241,7 +241,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   buttonTime: 0.5
   jumpHeight: 5
-  cancelRate: 100
+  cancelRate: 1
 --- !u!58 &911363944
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8d9d1483cc64c2f8a2d1f7ac63cf99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonTime: 0
+  buttonTime: 0.3
   jumpAmount: 10
 --- !u!58 &1222687920
 CircleCollider2D:
@@ -1380,6 +1380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 5
-  gravityScale: 10
-  fallingGravityScale: 40
-  jumping: 0
+  gravityScale: 1
+  fallingGravityScale: 1
+  mod: 10
+  jumpTime: 0.3
+  jumpTimeCounter: 0
