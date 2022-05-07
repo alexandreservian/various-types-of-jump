@@ -29,12 +29,17 @@ public class VariableJumpThree : MonoBehaviour
         releasedJump = (!isGrounded && Input.GetButton("Jump")) ? true : false;
     }
 
+    void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(feetPos.position, checkRadius);
+    }
+
     void FixedUpdate() {
         if (pressedJump) {
             rb.velocity = Vector2.up * jumpForce;
             pressedJump = false;
         }
-        if(releasedJump && rb.velocity.y > 0) {
+        if(releasedJump && rb.velocity.y < 0) {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallLongMult - 1) * Time.fixedDeltaTime;
         }
         else if(!releasedJump && rb.velocity.y > 0) {

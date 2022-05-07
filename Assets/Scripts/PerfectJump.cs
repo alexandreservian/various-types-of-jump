@@ -9,7 +9,7 @@ public class PerfectJump : MonoBehaviour
     public float jumpHeight = 3f;
     public float gravityScale = 10f;
     public float fallingGravityScale = 40f;
-    private float jumpForce;
+    public float jumpForce = 10f;
     private bool pressedJump;
     private bool releasedJump;
 
@@ -18,10 +18,11 @@ public class PerfectJump : MonoBehaviour
     public Transform feetPos;
     public float checkRadius;
     public LayerMask whatIsGround;
+    public float mod = 0f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        jumpForce = Mathf.Sqrt(-2 * jumpHeight * (Physics2D.gravity.y * gravityScale));
+        //jumpForce = Mathf.Sqrt(-2 * jumpHeight * (Physics2D.gravity.y * gravityScale));
     }
 
     void Update()
@@ -29,7 +30,7 @@ public class PerfectJump : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
 
         if (isGrounded && Input.GetButtonDown("Jump")) pressedJump = true;
-        releasedJump = (!isGrounded && Input.GetButton("Jump")) ? true : false;
+        if ((!isGrounded && Input.GetButtonUp("Jump"))) releasedJump = true;
     }
 
     void FixedUpdate() 
@@ -38,12 +39,16 @@ public class PerfectJump : MonoBehaviour
             rb.velocity = Vector2.up * jumpForce;
             pressedJump = false;
         }
-        
 
-        if(rb.velocity.y >= 0) {
-            rb.gravityScale = gravityScale;
-        } else if (rb.velocity.y < 0) {
-            rb.gravityScale = fallingGravityScale;
+        if(releasedJump) {
+            Debug.Log("Saida " + rb.velocity.y);
+            if(rb.velocity.y > 0) {
+                rb.velocity = Vector2.zero;
+                rb.velocity = Vector2.up * mod;
+                Debug.Log("Diferenca " + Physics2D.gravity.y * (0.85f - 1) * Time.fixedDeltaTime);
+                Debug.Log("Saida dois " + rb.velocity.y);
+            }
+            releasedJump = false;
         }
     }
 }
